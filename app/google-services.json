@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "396264312419",
+    "project_id": "quizz-project-hkr",
+    "storage_bucket": "quizz-project-hkr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396264312419:android:48ccda67a9c49b0b53f256",
+        "android_client_info": {
+          "package_name": "com.example.quizgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396264312419-hg9fhdjm37oaomd6959cpgv6um14eqpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBURMcDjAgXsylkHOKAAuRA3ZMWsobQ9iM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396264312419-hg9fhdjm37oaomd6959cpgv6um14eqpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
