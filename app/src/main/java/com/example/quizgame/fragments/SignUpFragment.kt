@@ -1,9 +1,7 @@
 package com.example.quizgame.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -13,8 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.quizgame.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
 
 class SignUpFragment : Fragment(R.layout.fragment_signup) {
     private lateinit var auth: FirebaseAuth
@@ -36,20 +37,35 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
             findNavController().navigate(action)
         }
         confirmBtn.setOnClickListener {
-            if (!TextUtils.isEmpty(email.text.toString()) || !TextUtils.isEmpty(username.text.toString()) || !TextUtils.isEmpty(pass1.text.toString()) || !TextUtils.isEmpty(pass2.text.toString())) {
+            if (!TextUtils.isEmpty(email.text.toString()) || !TextUtils.isEmpty(username.text.toString()) || !TextUtils.isEmpty(
+                    pass1.text.toString()
+                ) || !TextUtils.isEmpty(pass2.text.toString())) {
                 if (pass1.text.toString() == pass2.text.toString()) {
-                    activity?.let { it1 ->
-                        auth.createUserWithEmailAndPassword(email.text.toString(), pass1.text.toString()).addOnCompleteListener(it1) { task ->
-                            if (task.isSuccessful) {
-                                Log.d(TAG, "createUserWithEmail:success")
-                                val user = auth.currentUser
-                                if (user != null) {
-                                    val name = hashMapOf("username" to username.text.toString())
-                                    db.collection("users").document(user.uid).set(name)
+                    val usersRef: CollectionReference = db.collection("users")
+                    val query: Query = usersRef.whereEqualTo("username", username.text.toString())
+                    query.get().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            for (documentSnapshot in task.result!!) {
+                                val user = documentSnapshot.getString("username")
+                                if (user == username.text.toString()) {
+                                    username.error = "Username Taken"
+                                    break
                                 }
-                            } else {
-                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        if (task.result!!.size() == 0) {
+                            activity?.let { it1 ->
+                                auth.createUserWithEmailAndPassword(email.text.toString(), pass1.text.toString()).addOnCompleteListener(it1) { task ->
+                                    if (task.isSuccessful) {
+                                        val user = auth.currentUser
+                                        if (user != null) {
+                                            val name = hashMapOf("username" to username.text.toString())
+                                            db.collection("users").document(user.uid).set(name)
+                                        }
+                                    } else {
+                                        Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                             }
                         }
                     }
