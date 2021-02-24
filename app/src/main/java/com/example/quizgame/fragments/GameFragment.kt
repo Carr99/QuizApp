@@ -8,6 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+
 class GameFragment : Fragment(R.layout.fragment_game) {
     private val db = Firebase.firestore
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
