@@ -8,7 +8,8 @@
         android:id="@+id/homeFragment"
         android:name="com.example.quizgame.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home"
+        app:startDestination="@id/action_homeFragment_to_menuFragment">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -72,6 +73,9 @@
         <action
             android:id="@+id/action_profileMenuFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_profileMenuFragment_to_myGamesFragment"
+            app:destination="@id/myGamesFragment" />
     </fragment>
     <fragment
         android:id="@+id/gamesFragment"
@@ -110,4 +114,8 @@
             android:id="@+id/action_historyFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myGamesFragment"
+        android:name="com.example.quizgame.fragments.MyGamesFragment"
+        android:label="MyGamesFragment" />
 </navigation>

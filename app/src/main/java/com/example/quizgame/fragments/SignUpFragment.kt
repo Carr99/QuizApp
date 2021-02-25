@@ -73,14 +73,19 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
                     pass2.error = "Not matching"
                 }
             } else {
-                if (TextUtils.isEmpty(email.text.toString())) {
-                    email.error = "Required"
-                } else if (TextUtils.isEmpty(username.text.toString())) {
-                    username.error = "Required"
-                } else if (TextUtils.isEmpty(pass1.text.toString())) {
-                    pass1.error = "Minimum 6 characters"
-                } else if (TextUtils.isEmpty(pass2.text.toString())) {
-                    pass2.error = "Required"
+                when {
+                    TextUtils.isEmpty(email.text.toString()) -> {
+                        email.error = "Required"
+                    }
+                    TextUtils.isEmpty(username.text.toString()) -> {
+                        username.error = "Required"
+                    }
+                    TextUtils.isEmpty(pass1.text.toString()) -> {
+                        pass1.error = "Minimum 6 characters"
+                    }
+                    TextUtils.isEmpty(pass2.text.toString()) -> {
+                        pass2.error = "Required"
+                    }
                 }
             }
         }

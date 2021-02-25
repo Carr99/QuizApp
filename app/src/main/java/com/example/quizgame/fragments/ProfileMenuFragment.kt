@@ -27,7 +27,8 @@ class ProfileMenuFragment : Fragment(R.layout.fragment_profile_menu) {
         }
 
         gamesButton.setOnClickListener {
-            //insert game fragment
+            val action = ProfileMenuFragmentDirections.actionProfileMenuFragmentToMyGamesFragment()
+            findNavController().navigate(action)
         }
 
     }

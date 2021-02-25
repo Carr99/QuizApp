@@ -17,9 +17,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val textView = view.findViewById<TextView>(R.id.textView)
-        textView.text = "Welcome"
-
         auth = Firebase.auth
         val user = auth.currentUser
 
