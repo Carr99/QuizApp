@@ -121,5 +121,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     // save score etc to db
     fun saveToDB() {
 
+
+
     }
 }
