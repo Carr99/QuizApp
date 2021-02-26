@@ -30,12 +30,7 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
         val pass1 = view.findViewById<EditText>(R.id.password1)
         val pass2 = view.findViewById<EditText>(R.id.password2)
         val confirmBtn = view.findViewById<Button>(R.id.confirm_button)
-        val cancelBtn = view.findViewById<Button>(R.id.cancel_button)
 
-        cancelBtn.setOnClickListener {
-            val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
-            findNavController().navigate(action)
-        }
         confirmBtn.setOnClickListener {
             if (!TextUtils.isEmpty(email.text.toString()) || !TextUtils.isEmpty(username.text.toString()) || !TextUtils.isEmpty(
                     pass1.text.toString()
