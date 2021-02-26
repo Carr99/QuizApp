@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizgame.GameAdapter
@@ -20,6 +21,8 @@ class GamesFragment : Fragment() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val collectionReference: CollectionReference = db.collection("Games")
+    private var online: Boolean = false
+    private val args: GamesFragmentArgs by navArgs()
     var gameAdapter: GameAdapter? = null
 
     override fun onCreateView(
@@ -32,6 +35,8 @@ class GamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        online = args.online
+
         setUpRecyclerView()
     }
 
@@ -41,7 +46,7 @@ class GamesFragment : Fragment() {
             FirestoreRecyclerOptions.Builder<GameModel>()
                 .setQuery(query, GameModel::class.java)
                 .build()
-        gameAdapter = GameAdapter(firestoreRecyclerOptions)
+        gameAdapter = GameAdapter(firestoreRecyclerOptions, 1, online)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
         if (recyclerView != null) {
             recyclerView.layoutManager = LinearLayoutManager(activity)

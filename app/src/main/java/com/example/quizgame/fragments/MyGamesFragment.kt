@@ -51,7 +51,7 @@ class MyGamesFragment : Fragment() {
             FirestoreRecyclerOptions.Builder<GameModel>()
                 .setQuery(query, GameModel::class.java)
                 .build()
-        gameAdapter = GameAdapter(firestoreRecyclerOptions)
+        gameAdapter = GameAdapter(firestoreRecyclerOptions, 2, false)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
         gameAdapter!!.startListening()
         if (recyclerView != null) {
