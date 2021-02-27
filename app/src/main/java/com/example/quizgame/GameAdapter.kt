@@ -6,12 +6,17 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quizgame.fragments.MyGamesFragmentDirections
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
-class GameAdapter(options: FirestoreRecyclerOptions<GameModel>, x : Int, online : Boolean) :
+class GameAdapter(options: FirestoreRecyclerOptions<GameModel>, x : Int, online : Boolean, private val parentFragment: Fragment) :
     FirestoreRecyclerAdapter<GameModel, GameAdapter.GameAdapterVH>(options) {
     var from = x
     var online = online
@@ -39,7 +44,8 @@ class GameAdapter(options: FirestoreRecyclerOptions<GameModel>, x : Int, online 
                     matchmakingSolo(gameId)
                 }
             } else if (from == 2) {
-                //TODO: Go to create game with game id passed
+                val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment(gameId)
+                parentFragment.findNavController().navigate(action)
             }
         }
     }

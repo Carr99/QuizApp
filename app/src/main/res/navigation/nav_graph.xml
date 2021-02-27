@@ -135,5 +135,30 @@
         android:id="@+id/myGamesFragment"
         android:name="com.example.quizgame.fragments.MyGamesFragment"
         android:label="MyGamesFragment"
-        tools:layout="@layout/fragment_my_games"/>
+        tools:layout="@layout/fragment_my_games">
+        <action
+            android:id="@+id/action_myGamesFragment_to_createGameFragment"
+            app:destination="@id/createGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createGameFragment"
+        android:name="com.example.quizgame.fragments.CreateGameFragment"
+        android:label="fragment_create_game"
+        tools:layout="@layout/fragment_create_game" >
+        <action
+            android:id="@+id/action_createGameFragment_to_questionsListFragment"
+            app:destination="@id/questionsListFragment" />
+        <argument
+            android:name="gameId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionsListFragment"
+        android:name="com.example.quizgame.fragments.QuestionsListFragment"
+        android:label="fragment_questions_list"
+        tools:layout="@layout/fragment_questions_list" >
+        <argument
+            android:name="gameId"
+            app:argType="string" />
+    </fragment>
 </navigation>
