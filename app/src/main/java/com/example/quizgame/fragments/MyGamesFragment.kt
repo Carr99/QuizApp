@@ -1,5 +1,6 @@
 package com.example.quizgame.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,16 +42,11 @@ class MyGamesFragment : Fragment() {
         }
 
         if (user != null) {
-            db.collection("users").document(user.uid).get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val document = task.result
-                        if (document!!.exists()) {
-                            username = document["username"] as String
-                            setUpRecyclerView(username)
-                        }
-                    }
-                }
+            val shared = parentFragment?.activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
+            val username = shared?.getString("username", "")
+            if (username != null) {
+                setUpRecyclerView(username)
+            }
         }
     }
 
