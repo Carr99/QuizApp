@@ -8,13 +8,22 @@
         android:id="@+id/homeFragment"
         android:name="com.example.quizgame.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home"
+        app:startDestination="@id/action_homeFragment_to_menuFragment">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_homeFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            app:destination="@id/menuFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -72,6 +81,9 @@
         <action
             android:id="@+id/action_profileMenuFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_profileMenuFragment_to_myGamesFragment"
+            app:destination="@id/myGamesFragment" />
     </fragment>
     <fragment
         android:id="@+id/gamesFragment"
@@ -110,4 +122,8 @@
             android:id="@+id/action_historyFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myGamesFragment"
+        android:name="com.example.quizgame.fragments.MyGamesFragment"
+        android:label="MyGamesFragment" />
 </navigation>

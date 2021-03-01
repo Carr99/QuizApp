@@ -20,23 +20,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        //val textView = view.findViewById<TextView>(R.id.textView)
-        //textView.text = "Welcome"
         Handler(Looper.getMainLooper()).postDelayed({
-            auth = Firebase.auth
-            val user = auth.currentUser
 
-            if (user == null) {
-                // User is signed in.
-                val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-                findNavController().navigate(action)
-            } else {
-                // No user is signed in.
-                val action = HomeFragmentDirections.actionHomeFragmentToMenuFragment()
-                findNavController().navigate(action)
-            }
+        auth = Firebase.auth
+        val user = auth.currentUser
+
+
+        if (user == null) {
+            // User is not signed in.
+            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+            findNavController().navigate(action)
+        } else {
+            // User is signed in.
+            val action = HomeFragmentDirections.actionHomeFragmentToMenuFragment()
+            findNavController().navigate(action)
+        }
+
         }, 2500)
-
     }
-
 }
