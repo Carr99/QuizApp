@@ -16,14 +16,18 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_menuFragment"
             app:destination="@id/menuFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -35,7 +39,9 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_loginFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -44,10 +50,9 @@
         tools:layout="@layout/fragment_signup" >
         <action
             android:id="@+id/action_signUpFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
@@ -93,6 +98,10 @@
         <action
             android:id="@+id/action_gamesFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+        <argument
+            android:name="online"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -125,5 +134,31 @@
     <fragment
         android:id="@+id/myGamesFragment"
         android:name="com.example.quizgame.fragments.MyGamesFragment"
-        android:label="MyGamesFragment" />
+        android:label="MyGamesFragment"
+        tools:layout="@layout/fragment_my_games">
+        <action
+            android:id="@+id/action_myGamesFragment_to_createGameFragment"
+            app:destination="@id/createGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createGameFragment"
+        android:name="com.example.quizgame.fragments.CreateGameFragment"
+        android:label="fragment_create_game"
+        tools:layout="@layout/fragment_create_game" >
+        <action
+            android:id="@+id/action_createGameFragment_to_questionsListFragment"
+            app:destination="@id/questionsListFragment" />
+        <argument
+            android:name="gameId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionsListFragment"
+        android:name="com.example.quizgame.fragments.QuestionsListFragment"
+        android:label="fragment_questions_list"
+        tools:layout="@layout/fragment_questions_list" >
+        <argument
+            android:name="gameId"
+            app:argType="string" />
+    </fragment>
 </navigation>

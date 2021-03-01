@@ -6,13 +6,20 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quizgame.fragments.MyGamesFragmentDirections
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
-class GameAdapter(options: FirestoreRecyclerOptions<GameModel>) :
+class GameAdapter(options: FirestoreRecyclerOptions<GameModel>, x : Int, online : Boolean, private val parentFragment: Fragment) :
     FirestoreRecyclerAdapter<GameModel, GameAdapter.GameAdapterVH>(options) {
+    var from = x
+    var online = online
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameAdapterVH {
         return GameAdapterVH(
@@ -30,13 +37,25 @@ class GameAdapter(options: FirestoreRecyclerOptions<GameModel>) :
         holder.rating.rating = model.rating
         holder.linearLayout.setOnClickListener {
             val gameId = snapshots.getSnapshot(position).id
-            matchmaking(gameId)
+            if (from == 1) {
+                if (online) {
+                    matchmakingMulti(gameId)
+                } else {
+                    matchmakingSolo(gameId)
+                }
+            } else if (from == 2) {
+                val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment(gameId)
+                parentFragment.findNavController().navigate(action)
+            }
         }
     }
 
-    fun matchmaking(id: String) {
-        //TODO: Set up matchmaking, depending on offline or online
+    private fun matchmakingSolo(id: String) {
+        //TODO: Set up matchmaking solo, pass gameid and active game id
+    }
 
+    private fun matchmakingMulti(id: String) {
+        //TODO: Set up matchmaking online, pass gameid and active game id
     }
 
     class GameAdapterVH(v: View) : RecyclerView.ViewHolder(v) {

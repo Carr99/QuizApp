@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizgame.GameAdapter
@@ -31,6 +33,13 @@ class MyGamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = Firebase.auth.currentUser
+        val createBtn = view.findViewById<Button>(R.id.create_button)
+
+        createBtn.setOnClickListener {
+            val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment("0")
+            findNavController().navigate(action)
+        }
+
         if (user != null) {
             db.collection("users").document(user.uid).get()
                 .addOnCompleteListener { task ->
@@ -45,13 +54,13 @@ class MyGamesFragment : Fragment() {
         }
     }
 
-    fun setUpRecyclerView(username: String) {
+    private fun setUpRecyclerView(username: String) {
         val query: Query = db.collection("Games").whereEqualTo("creator", username)
         val firestoreRecyclerOptions: FirestoreRecyclerOptions<GameModel> =
             FirestoreRecyclerOptions.Builder<GameModel>()
                 .setQuery(query, GameModel::class.java)
                 .build()
-        gameAdapter = GameAdapter(firestoreRecyclerOptions)
+        gameAdapter = GameAdapter(firestoreRecyclerOptions, 2, false, this)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
         gameAdapter!!.startListening()
         if (recyclerView != null) {
