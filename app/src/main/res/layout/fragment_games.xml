@@ -9,10 +9,13 @@
     tools:context=".fragments.GamesFragment">
 
     <SearchView
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="10dp"
         android:background="@color/white"
+        android:queryHint="GameName..."
+        android:iconifiedByDefault="false"
          />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -16,12 +16,12 @@ class OnlineOfflineFragment : Fragment(R.layout.fragment_online_or_offline) {
         val randomButton = view.findViewById<Button>(R.id.buttonRandom)
 
         soloButton.setOnClickListener {
-            val action = OnlineOfflineFragmentDirections.actionOnlineOfflineFragmentToGamesFragment(false)
+            val action = OnlineOfflineFragmentDirections.actionOnlineOfflineFragmentToGenreFragment(false)
             findNavController().navigate(action)
         }
 
         randomButton.setOnClickListener {
-            val action = OnlineOfflineFragmentDirections.actionOnlineOfflineFragmentToGamesFragment(true)
+            val action = OnlineOfflineFragmentDirections.actionOnlineOfflineFragmentToGenreFragment(true)
             findNavController().navigate(action)
         }
     }

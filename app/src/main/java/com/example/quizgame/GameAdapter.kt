@@ -68,7 +68,9 @@ class GameAdapter(
                         }
                     }
             } else if (from == 2) {
-                val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment(gameID)
+                val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment(
+                    gameID
+                )
                 parentFragment.findNavController().navigate(action)
             }
         }
@@ -118,7 +120,10 @@ class GameAdapter(
                                     "Found and Joining Game",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(gameID, activeGameID)
+                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                                    gameID,
+                                    activeGameID
+                                )
                                 parentFragment.findNavController().navigate(action)
                             }
                             .addOnFailureListener { e ->
@@ -138,9 +143,12 @@ class GameAdapter(
                                 arrayList[3],
                                 arrayList[4]
                             ),
-                            "status" to "Waiting")
+                            "status" to "Waiting"
+                        )
                         val newActiveID = db.collection("Games").document(gameID).collection("ActiveGames").document().id
-                        db.collection("Games").document(gameID).collection("ActiveGames").document(newActiveID)
+                        db.collection("Games").document(gameID).collection("ActiveGames").document(
+                            newActiveID
+                        )
                             .set(activeGame)
                             .addOnSuccessListener {
                                 Toast.makeText(
@@ -149,7 +157,10 @@ class GameAdapter(
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(gameID, newActiveID)
+                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                                    gameID,
+                                    newActiveID
+                                )
                                 parentFragment.findNavController().navigate(action)
 
                             }

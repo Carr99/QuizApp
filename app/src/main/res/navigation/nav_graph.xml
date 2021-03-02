@@ -72,8 +72,8 @@
         android:label="fragment_online_or_offline"
         tools:layout="@layout/fragment_online_or_offline" >
         <action
-            android:id="@+id/action_onlineOfflineFragment_to_gamesFragment"
-            app:destination="@id/gamesFragment" />
+            android:id="@+id/action_onlineOfflineFragment_to_genreFragment"
+            app:destination="@id/genreFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileMenuFragment"
@@ -102,6 +102,9 @@
             android:name="online"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="genre"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -166,5 +169,17 @@
         <argument
             android:name="gameId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/genreFragment"
+        android:name="com.example.quizgame.fragments.GenreFragment"
+        android:label="fragment_genre"
+        tools:layout="@layout/fragment_genre" >
+        <action
+            android:id="@+id/action_genreFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+        <argument
+            android:name="online"
+            app:argType="boolean" />
     </fragment>
 </navigation>
