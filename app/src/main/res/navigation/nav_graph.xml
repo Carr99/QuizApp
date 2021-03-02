@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/menuFragment">
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.quizgame.fragments.HomeFragment"
@@ -60,11 +60,17 @@
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_menuFragment_to_profileMenuFragment"
-            app:destination="@id/profileMenuFragment" />
-        <action
             android:id="@+id/action_menuFragment_to_onlineOfflineFragment"
             app:destination="@id/onlineOfflineFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_myGamesFragment"
+            app:destination="@id/myGamesFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         android:id="@+id/onlineOfflineFragment"
@@ -74,21 +80,6 @@
         <action
             android:id="@+id/action_onlineOfflineFragment_to_genreFragment"
             app:destination="@id/genreFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/profileMenuFragment"
-        android:name="com.example.quizgame.fragments.ProfileMenuFragment"
-        android:label="fragment_profile_menu"
-        tools:layout="@layout/fragment_profile_menu" >
-        <action
-            android:id="@+id/action_profileMenuFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
-        <action
-            android:id="@+id/action_profileMenuFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
-        <action
-            android:id="@+id/action_profileMenuFragment_to_myGamesFragment"
-            app:destination="@id/myGamesFragment" />
     </fragment>
     <fragment
         android:id="@+id/gamesFragment"

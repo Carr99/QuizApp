@@ -13,13 +13,31 @@
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
+        android:layout_margin="5dp"
         android:text="Play" />
 
     <Button
-        android:id="@+id/buttonProfile"
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:layout_margin="5dp"
-        android:text="Profile" />
+        android:id="@+id/buttonAccount"
+        android:text="Account"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:id="@+id/buttonHistory"
+        android:layout_margin="5dp"
+        android:text="History"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:id="@+id/buttonGames"
+        android:layout_margin="5dp"
+        android:text="Games"
+        />
 
 </LinearLayout>

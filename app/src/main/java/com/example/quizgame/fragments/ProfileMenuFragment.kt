@@ -17,17 +17,17 @@ class ProfileMenuFragment : Fragment(R.layout.fragment_profile_menu) {
         val historyButton = view.findViewById<Button>(R.id.buttonHistory)
 
         accountButton.setOnClickListener {
-            val action = ProfileMenuFragmentDirections.actionProfileMenuFragmentToAccountFragment()
+            val action = MenuFragmentDirections.actionMenuFragmentToAccountFragment()
             findNavController().navigate(action)
         }
 
         historyButton.setOnClickListener {
-            val action = ProfileMenuFragmentDirections.actionProfileMenuFragmentToHistoryFragment()
+            val action = MenuFragmentDirections.actionMenuFragmentToHistoryFragment()
             findNavController().navigate(action)
         }
 
         gamesButton.setOnClickListener {
-            val action = ProfileMenuFragmentDirections.actionProfileMenuFragmentToMyGamesFragment()
+            val action = MenuFragmentDirections.actionMenuFragmentToMyGamesFragment()
             findNavController().navigate(action)
         }
 
