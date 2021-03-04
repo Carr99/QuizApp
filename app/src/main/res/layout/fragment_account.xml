@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:textSize="30sp"
         android:text="Username:"
         />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:textSize="30sp"
         android:text="Email:"
         />
@@ -52,11 +52,21 @@
         android:layout_gravity="center"
         android:text="Change password" />
 
+    <Button
+        android:id="@+id/logOutButtonId"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#cc0000"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:text="Log Out" />
+
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@mipmap/ic_launcher_foreground"
-        android:layout_margin="8dp"
+        android:layout_margin="67dp"
         android:layout_gravity="center"
         />
 
