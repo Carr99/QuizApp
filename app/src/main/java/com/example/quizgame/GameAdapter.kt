@@ -15,6 +15,7 @@ import com.example.quizgame.fragments.GamesFragmentDirections
 import com.example.quizgame.fragments.MyGamesFragmentDirections
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
@@ -40,7 +41,7 @@ class GameAdapter(
     override fun onBindViewHolder(holder: GameAdapterVH, position: Int, model: GameModel) {
         holder.name.text = model.name
         holder.creator.text = model.creator
-        holder.rating.rating = model.rating
+        holder.rating.rating = model.score/model.vote
         holder.linearLayout.setOnClickListener {
             val gameID = snapshots.getSnapshot(position).id
             if (from == 1) {
@@ -49,9 +50,7 @@ class GameAdapter(
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             var count = 0
-                            for (document in task.result!!) {
-                                count++
-                            }
+                            for (document in task.result!!) count++
                             val arrayList: Array<Int> = Array(5) { -1 }
                             for (i in 0..4) {
                                 var index = (0 until count).random()
@@ -96,8 +95,8 @@ class GameAdapter(
                     for (document in task.result!!) {
                         if (document.exists()) {
                             val status = document.getString("status")
-                            if (status == "Waiting") {
-                                if (document.getString("Player1") != username) {
+                            if (status == "waiting") {
+                                if (document.getString("player1") != username) {
                                     gameExist = true
                                     activeGameID = document.id
                                 } else {
@@ -108,7 +107,7 @@ class GameAdapter(
                     }
                     if (gameExist) {
                         val data = hashMapOf(
-                            "Player2" to username,
+                            "player2" to username,
                             "status" to "Active"
                         )
                         db.collection("Games").document(gameID).collection("ActiveGames")
@@ -132,10 +131,10 @@ class GameAdapter(
                             }
                     } else if (!alreadyWaiting) {
                         val activeGame = hashMapOf(
-                            "Player1" to username,
-                            "Player1Score" to 0,
-                            "Player2" to "",
-                            "Player2Score" to 0,
+                            "player1" to username,
+                            "player1Score" to 0,
+                            "player2" to "",
+                            "player2Score" to 0,
                             "questions" to arrayListOf(
                                 arrayList[0],
                                 arrayList[1],
@@ -143,7 +142,10 @@ class GameAdapter(
                                 arrayList[3],
                                 arrayList[4]
                             ),
-                            "status" to "Waiting"
+                            "status" to "waiting",
+                            "date" to FieldValue.serverTimestamp(),
+                            "player1Finished" to false,
+                            "player2Finished" to false
                         )
                         val newActiveID = db.collection("Games").document(gameID).collection("ActiveGames").document().id
                         db.collection("Games").document(gameID).collection("ActiveGames").document(

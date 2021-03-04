@@ -1,55 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_row"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:background="@drawable/rounded"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/list_row"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/list_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:shadowColor="@color/black"
+        android:shadowRadius="10"
+        android:text="Placeholder"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/list_rating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:numStars="5"
+        android:progressTint="#FFA000"
+        android:rating="4.5"
+        android:secondaryProgressTint="#FFA000"
+        android:stepSize="0.1" />
+
+    <TextView
+        android:id="@+id/list_creator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded"
-        android:orientation="vertical"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true">
-
-        <TextView
-            android:id="@+id/list_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:shadowColor="@color/black"
-            android:shadowRadius="10"
-            android:text="Placeholder"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <RatingBar
-            android:id="@+id/list_rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:numStars="5"
-            android:progressTint="#FFA000"
-            android:rating="4.5"
-            android:secondaryProgressTint="#FFA000"
-            android:stepSize="0.1" />
-
-        <TextView
-            android:id="@+id/list_creator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Placeholder"
-            android:textColor="#A6000000"
-            android:textSize="12sp" />
-    </LinearLayout>
+        android:text="Placeholder"
+        android:textColor="#A6000000"
+        android:textSize="12sp" />
 </LinearLayout>

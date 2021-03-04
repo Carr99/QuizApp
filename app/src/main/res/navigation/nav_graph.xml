@@ -115,7 +115,8 @@
         tools:layout="@layout/fragment_game" >
         <action
             android:id="@+id/action_gameFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/gamesFragment" />
         <argument
             android:name="gameID"
             app:argType="string" />
@@ -127,7 +128,14 @@
         android:id="@+id/resultFragment"
         android:name="com.example.quizgame.fragments.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="gameID"
+            app:argType="string" />
+        <argument
+            android:name="activeGameID"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.quizgame.fragments.HistoryFragment"
