@@ -151,6 +151,9 @@
         <argument
             android:name="gameId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_createGameFragment_to_createQuestionFragment"
+            app:destination="@id/createQuestionFragment" />
     </fragment>
     <fragment
         android:id="@+id/questionsListFragment"
@@ -180,6 +183,7 @@
         android:id="@+id/createQuestionFragment"
         android:name="com.example.quizgame.fragments.CreateQuestionFragment"
         android:label="CreateQuestionFragment"
+        tools:layout="@layout/fragment_create_question"
         >
         <argument
             android:name="gameID"
