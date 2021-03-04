@@ -1,6 +1,7 @@
 package com.example.quizgame.fragments
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -23,16 +24,32 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val signUpButton = view.findViewById<Button>(R.id.signUp_button)
 
         loginButton.setOnClickListener {
-            activity?.let { it1 ->
-                auth.signInWithEmailAndPassword(email.text.toString(), pass.text.toString())
-                    .addOnCompleteListener(it1) { task ->
-                        if (task.isSuccessful) {
-                            val action = LoginFragmentDirections.actionLoginFragmentToMenuFragment()
-                            findNavController().navigate(action)
-                        } else {
-                            Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
+            if (email.text.isNotEmpty() && pass.text.length > 6) {
+                activity?.let { it1 ->
+                    auth.signInWithEmailAndPassword(email.text.toString(), pass.text.toString())
+                        .addOnCompleteListener(it1) { task ->
+                            if (task.isSuccessful) {
+                                val action =
+                                    LoginFragmentDirections.actionLoginFragmentToMenuFragment()
+                                findNavController().navigate(action)
+                            } else {
+                                Toast.makeText(
+                                    activity,
+                                    "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
+                }
+            } else {
+                when {
+                    TextUtils.isEmpty(email.text.toString()) -> {
+                        email.error = "Required"
                     }
+                    TextUtils.isEmpty(pass.text.toString()) -> {
+                        pass.error = "Required"
+                    }
+                }
             }
         }
         signUpButton.setOnClickListener {

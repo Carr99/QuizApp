@@ -56,6 +56,8 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
                                         if (user != null) {
                                             val name = hashMapOf("username" to username.text.toString())
                                             db.collection("users").document(user.uid).set(name)
+                                            val action = SignUpFragmentDirections.actionSignUpFragmentToMenuFragment()
+                                            findNavController().navigate(action)
                                         }
                                     } else {
                                         Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()

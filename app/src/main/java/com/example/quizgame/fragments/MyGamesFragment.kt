@@ -42,7 +42,7 @@ class MyGamesFragment : Fragment() {
         }
 
         if (user != null) {
-            val shared = parentFragment?.activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
+            val shared = activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
             val username = shared?.getString("username", "")
             if (username != null) {
                 setUpRecyclerView(username)
