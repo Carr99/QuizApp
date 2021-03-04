@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,9 @@ class QuestionsListFragment : Fragment() {
         val addButton = view.findViewById<Button>(R.id.add)
 
         addButton.setOnClickListener {
-            // TODO: Add questions and answers
+            val action = QuestionsListFragmentDirections.actionQuestionsListFragmentToCreateQuestionFragment(args.gameId)
+            findNavController().navigate(action)
+
         }
 
         setUpRecyclerView()

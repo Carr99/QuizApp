@@ -160,6 +160,9 @@
         <argument
             android:name="gameId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_questionsListFragment_to_createQuestionFragment"
+            app:destination="@id/createQuestionFragment" />
     </fragment>
     <fragment
         android:id="@+id/genreFragment"
@@ -172,5 +175,14 @@
         <argument
             android:name="online"
             app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/createQuestionFragment"
+        android:name="com.example.quizgame.fragments.CreateQuestionFragment"
+        android:label="CreateQuestionFragment"
+        >
+        <argument
+            android:name="gameID"
+            app:argType="string" />
     </fragment>
 </navigation>
