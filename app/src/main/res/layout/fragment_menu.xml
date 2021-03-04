@@ -33,11 +33,10 @@
         />
 
     <Button
+        android:id="@+id/buttonGames"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:id="@+id/buttonGames"
         android:layout_margin="5dp"
-        android:text="Games"
-        />
+        android:text="My Games" />
 
 </LinearLayout>

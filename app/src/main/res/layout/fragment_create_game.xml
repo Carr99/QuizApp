@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:text="Movies/TV-Series"
+        android:text="Culture"
         android:textColor="@color/white"/>
     <CheckBox
         android:layout_width="match_parent"
