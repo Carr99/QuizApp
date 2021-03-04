@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var auth: FirebaseAuth
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,24 +34,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
             findNavController().navigate(action)
         } else {
-            val sharedPreference =
-                activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
-            if (sharedPreference  != null) {
-                db.collection("users").document(user.uid).get()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val document = task.result
-                            if (document!!.exists()) {
-                                val username = document["username"] as String
-                                val editor = sharedPreference?.edit()
-                                editor.putString("username", username)
-                                editor.commit()
-                                val action = HomeFragmentDirections.actionHomeFragmentToMenuFragment()
-                                findNavController().navigate(action)
-                            }
-                        }
-                    }
-            }
+            val action = HomeFragmentDirections.actionHomeFragmentToMenuFragment()
+            findNavController().navigate(action)
         }
 
         }, 2500)
