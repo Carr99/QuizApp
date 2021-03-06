@@ -108,7 +108,7 @@ class GameAdapter(
 
                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                     gameID,
-                    newActiveID
+                    newActiveID, true
                 )
                 parentFragment.findNavController().navigate(action)
 
@@ -162,7 +162,7 @@ class GameAdapter(
                                 ).show()
                                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                                     gameID,
-                                    activeGameID
+                                    activeGameID, false
                                 )
                                 parentFragment.findNavController().navigate(action)
                             }
@@ -202,7 +202,7 @@ class GameAdapter(
 
                                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                                     gameID,
-                                    newActiveID
+                                    newActiveID, false
                                 )
                                 parentFragment.findNavController().navigate(action)
 
