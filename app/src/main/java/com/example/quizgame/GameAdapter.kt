@@ -1,6 +1,7 @@
 package com.example.quizgame
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,7 @@ class GameAdapter(
     override fun onBindViewHolder(holder: GameAdapterVH, position: Int, model: GameModel) {
         holder.name.text = model.name
         holder.creator.text = model.creator
-        holder.rating.rating = model.score/model.vote
+        holder.rating.rating = model.score / model.vote
         holder.linearLayout.setOnClickListener {
             val gameID = snapshots.getSnapshot(position).id
             if (from == 1) {
@@ -75,11 +76,43 @@ class GameAdapter(
         }
     }
 
+    // save gameID etc for easy lookup in match history or save relevant info directly into history to save a search
+//    private fun saveHistorySolo(db: FirebaseFirestore, username: String?, gameID: String) {
+//        val genreRef = db.collection("Games").document(gameID).get().addOnSuccessListener { document ->
+//            Log.e("test docu",document.get("genre").toString())
+//        }
+//        val score = 1
+//        // quiz info (name, genre), score, date?
+//        db.collection("users").whereEqualTo("username", username).get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    Log.e("id", document.id)
+//                    val matchInfo = hashMapOf(
+//                        "player1" to username,
+//                        "quizName" to quizName,
+//                        "genre" to genre
+//                    )
+//                    db.collection("users").document(document.id).collection("history").document()
+//                        .set(
+//                            matchInfo,
+//                            SetOptions.merge()
+//                        )
+//                }
+//            }
+//    }
+
+    private fun saveHistoryMulti() {
+
+    }
+
     private fun matchmakingSolo(gameID: String, db: FirebaseFirestore, arrayList: Array<Int>) {
         //TODO: Set up matchmaking solo, pass gameid and active game id
 
         val shared =
-            parentFragment.activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)  //make global?
+            parentFragment.activity?.getSharedPreferences(
+                "user_data",
+                Context.MODE_PRIVATE
+            )  //make global?
         val username = shared?.getString("username", "")
 
         val activeGame = hashMapOf(
@@ -94,7 +127,8 @@ class GameAdapter(
             ),
             "date" to FieldValue.serverTimestamp(),
         )
-        val newActiveID = db.collection("Games").document(gameID).collection("ActiveGames").document().id
+        val newActiveID =
+            db.collection("Games").document(gameID).collection("ActiveGames").document().id
         db.collection("Games").document(gameID).collection("ActiveGames").document(
             newActiveID
         )
@@ -105,6 +139,8 @@ class GameAdapter(
                     "Creating game!",
                     Toast.LENGTH_SHORT
                 ).show()
+
+//                saveHistorySolo(db, username, gameID)
 
                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                     gameID,
@@ -160,10 +196,11 @@ class GameAdapter(
                                     "Found and Joining Game",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
-                                    gameID,
-                                    activeGameID
-                                )
+                                val action =
+                                    GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                                        gameID,
+                                        activeGameID
+                                    )
                                 parentFragment.findNavController().navigate(action)
                             }
                             .addOnFailureListener { e ->
@@ -188,7 +225,9 @@ class GameAdapter(
                             "player1Finished" to false,
                             "player2Finished" to false
                         )
-                        val newActiveID = db.collection("Games").document(gameID).collection("ActiveGames").document().id
+                        val newActiveID =
+                            db.collection("Games").document(gameID).collection("ActiveGames")
+                                .document().id
                         db.collection("Games").document(gameID).collection("ActiveGames").document(
                             newActiveID
                         )
@@ -200,10 +239,11 @@ class GameAdapter(
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
-                                    gameID,
-                                    newActiveID
-                                )
+                                val action =
+                                    GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                                        gameID,
+                                        newActiveID
+                                    )
                                 parentFragment.findNavController().navigate(action)
 
                             }

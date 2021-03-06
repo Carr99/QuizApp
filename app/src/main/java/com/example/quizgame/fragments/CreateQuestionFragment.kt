@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.quizgame.R
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -69,6 +70,12 @@ class CreateQuestionFragment : Fragment(R.layout.fragment_create_question) {
                                 option3.text.clear()
                                 count++
                             }
+                        val readyStatus = hashMapOf(
+                            "ready" to true
+                        )
+
+                        if(count >= 4) db.collection("Games").document(gameID).set(readyStatus,
+                            SetOptions.merge())
                     }
 
 
