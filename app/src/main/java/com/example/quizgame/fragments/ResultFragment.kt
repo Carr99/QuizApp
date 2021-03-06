@@ -129,10 +129,14 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                                     if (task.isSuccessful) {
                                         val document = task.result
                                         if (document!!.exists()) {
-                                            val list =
-                                                document.get("ratedGames") as ArrayList<*>
-                                            if (list.isNotEmpty()) {
-                                                if (!list.contains(gameID)) {
+                                            if (document.get("ratedGames") != null) {
+                                                val list =
+                                                    document.get("ratedGames") as ArrayList<*>
+                                                if (list.isNotEmpty()) {
+                                                    if (!list.contains(gameID)) {
+                                                        rateGameLayout.visibility = View.VISIBLE
+                                                    }
+                                                } else {
                                                     rateGameLayout.visibility = View.VISIBLE
                                                 }
                                             } else {
