@@ -77,6 +77,47 @@ class GameAdapter(
 
     private fun matchmakingSolo(gameID: String, db: FirebaseFirestore, arrayList: Array<Int>) {
         //TODO: Set up matchmaking solo, pass gameid and active game id
+
+        val shared =
+            parentFragment.activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)  //make global?
+        val username = shared?.getString("username", "")
+
+        val activeGame = hashMapOf(
+            "player1" to username,
+            "player1Score" to 0,
+            "questions" to arrayListOf(
+                arrayList[0],
+                arrayList[1],
+                arrayList[2],
+                arrayList[3],
+                arrayList[4]
+            ),
+            "date" to FieldValue.serverTimestamp(),
+        )
+        val newActiveID = db.collection("Games").document(gameID).collection("ActiveGames").document().id
+        db.collection("Games").document(gameID).collection("ActiveGames").document(
+            newActiveID
+        )
+            .set(activeGame)
+            .addOnSuccessListener {
+                Toast.makeText(
+                    parentFragment.activity,
+                    "Creating game!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                    gameID,
+                    newActiveID
+                )
+                parentFragment.findNavController().navigate(action)
+
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(parentFragment.activity, "Error", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
     }
 
     private fun matchmakingMulti(gameID: String, db: FirebaseFirestore, arrayList: Array<Int>) {

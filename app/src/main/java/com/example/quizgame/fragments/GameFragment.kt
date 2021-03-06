@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.quizgame.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -15,16 +16,19 @@ import com.google.firebase.ktx.Firebase
 class GameFragment : Fragment(R.layout.fragment_game) {
     private val db = Firebase.firestore
     private var trueList = ArrayList<Long>()
-    private lateinit var questionText:TextView
-    private lateinit var buttonOne:Button
-    private lateinit var buttonTwo:Button
-    private lateinit var buttonThree:Button
-    private lateinit var buttonFour:Button
+    private lateinit var questionText: TextView
+    private lateinit var buttonOne: Button
+    private lateinit var buttonTwo: Button
+    private lateinit var buttonThree: Button
+    private lateinit var buttonFour: Button
+    private lateinit var countdownText: TextView
+    private val args: ResultFragmentArgs by navArgs()
+    private var score = 0
 
     // get quiz from db
-    fun getQuizQuestions() {
-        val gameID = "yTqC73YLuhbt1buiK5eo"
-        val activeGameID = "nFnnTJoP9Mn2kUD8xOWp"
+    fun getQuizQuestions(listOfButtons: ArrayList<Button>) {
+        val gameID = args.gameID
+        val activeGameID = args.activeGameID
 
         db.collection("Games").document(gameID).collection("ActiveGames").document(activeGameID)
             .get()
@@ -35,7 +39,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
                         trueList = (document["questions"] as ArrayList<Long>?)!!
                         //Do what you need to do with your ArrayList
-                        swagList(trueList, gameID, activeGameID)
+                        printQuestions(listOfButtons,0)
                     }
                 }
             }
@@ -43,84 +47,96 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     //print to buttons
 
-    private fun swagList(trueList: ArrayList<Long>, gameID: String, activeGameID: String) {
-
-        for(i in 0..1) {
-
-            db.collection("Games").document(gameID).collection("Quiz")
-                .document(trueList[i].toString())
+    // make 5 arrays, one for each text / button, add all of the same, in timer finish print next index to buttons
+    private fun printQuestions(
+        listOfButtons: ArrayList<Button>,
+        counter : Int
+    ) {
+            listOfButtons.shuffle()
+            db.collection("Games").document(args.gameID).collection("Quiz")
+                .document(trueList[counter].toString())
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val document = task.result
                         if (document!!.exists()) {
                             questionText.text = (document["question"]).toString()
-                            buttonOne.text = (document["answer"]).toString()
-                            buttonTwo.text = (document["option1"]).toString()
-                            buttonThree.text = (document["option2"]).toString()
-                            buttonFour.text = (document["option3"]).toString()
-
-                            //timer
+                            listOfButtons[0].text = (document["answer"]).toString()
+                            listOfButtons[1].text = (document["option1"]).toString()
+                            listOfButtons[2].text = (document["option2"]).toString()
+                            listOfButtons[3].text = (document["option3"]).toString()
 
                         }
                     }
                 }
 
 
-
-
-
-        }//end of loop
-
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         questionText = view.findViewById(R.id.questionTextView)
-         buttonOne = view.findViewById(R.id.buttonOne)
-         buttonTwo = view.findViewById(R.id.buttonTwo)
-         buttonThree = view.findViewById(R.id.buttonThree)
-         buttonFour = view.findViewById(R.id.buttonFour)
+        questionText = view.findViewById(R.id.questionTextView)
+        buttonOne = view.findViewById(R.id.buttonOne)
+        buttonTwo = view.findViewById(R.id.buttonTwo)
+        buttonThree = view.findViewById(R.id.buttonThree)
+        buttonFour = view.findViewById(R.id.buttonFour)
+        countdownText = view.findViewById(R.id.countDownTextView)
+        val listOfButtons: ArrayList<Button> =
+            arrayListOf(buttonOne, buttonTwo, buttonThree, buttonFour)
 
-        val score = 0
-        getQuizQuestions()
-
-        val gameID = "yTqC73YLuhbt1buiK5eo"
-        val activeGameID = "nFnnTJoP9Mn2kUD8xOWp"
-
-
-        val countdownText = view.findViewById<TextView>(R.id.countDownTextView)
-
-        // method call to timer??
-        val timer = object : CountDownTimer(20000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                countdownText.text = millisUntilFinished.toString()
-            }
-
-            override fun onFinish() {
-                countdownText.text="0"
-                //next question
-                //lock buttons
-                //update text for questions/buttons
-                //unlock buttons
+        buttonOne.setOnClickListener {
+            if (listOfButtons[0] == buttonOne) {
+                score++
+                // next question
+                Log.e("Button 1 score", score.toString())
             }
         }
-        timer.start()
+        buttonTwo.setOnClickListener {
+            if (listOfButtons[0] == buttonTwo) {
+                score++
+                // next question
+                Log.e("Button 2 score", score.toString())
+            }
+        }
+        buttonThree.setOnClickListener {
+            if (listOfButtons[0] == buttonThree) {
+                score++
+                // next question
+                Log.e("Button 3 score", score.toString())
+            }
+        }
+        buttonFour.setOnClickListener {
+            if (listOfButtons[0] == buttonFour) {
+                score++
+                // next question
+                Log.e("Button 4 score", score.toString())
+            }
+        }
 
-        // if button answer == clicked --> score++;
+        getQuizQuestions(listOfButtons)
 
-        //index++
+        for (i in 1..3) {
+            val timer = object : CountDownTimer(20000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    countdownText.text = millisUntilFinished.toString()
+                }
 
-        // end of loop
+                override fun onFinish() {
+                    printQuestions(listOfButtons, i)
+                }
+            }
+            timer.start()
+
+            Log.e("i",i.toString())
 
 
+        }
     }
 
 
     // save score etc to db
     fun saveToDB() {
-
 
 
     }
