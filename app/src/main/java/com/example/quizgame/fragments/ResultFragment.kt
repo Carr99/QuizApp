@@ -25,14 +25,18 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val names = view.findViewById<TextView>(R.id.names)
+        val name1 = view.findViewById<TextView>(R.id.name1)
+        val vs = view.findViewById<TextView>(R.id.vs)
+        val name2 = view.findViewById<TextView>(R.id.name2)
         val scores = view.findViewById<TextView>(R.id.score)
         val rateGameLayout = view.findViewById<LinearLayout>(R.id.rateGameId)
         val ratingBar = view.findViewById<RatingBar>(R.id.ratingBarId)
         val facebookButtonLayout = view.findViewById<LinearLayout>(R.id.facebookButton)
-
         val gameID = args.gameID
         val activeGameID = args.activeGameID
+        var facebookText = ""
+        val shared = activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        val username = shared?.getString("username", "")
 
         auth = Firebase.auth
         val user = auth.currentUser?.uid
@@ -51,7 +55,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         }
 
         facebookButtonLayout.setOnClickListener {
-            //TODO: Share on facebook
+
         }
 
         db.collection("Games").document(gameID).collection("ActiveGames").document(activeGameID)
@@ -61,32 +65,61 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                     val document = task.result
                     if (document!!.exists()) {
                         if (document.getString("player2") != null) {
-                            // Played Online
+                            vs.visibility = View.VISIBLE
+                            name2.visibility = View.VISIBLE
+
                             val player1 = document.getString("player1")
                             val player2 = document.getString("player2")
                             val player1Score = document.getLong("player1Score")
                             val player2Score = document.getLong("player2Score")
                             val playerScores = "$player1Score - $player2Score"
-                            val players = "$player1 vs $player2"
-                            names.text = players
+
+                            name1.text = player1
+                            name2.text = player2
+
                             if (document.getBoolean("player1Finished") == true && document.getBoolean(
                                     "player2Finished"
                                 ) == true
                             ) {
                                 facebookButtonLayout.visibility = View.VISIBLE
                                 scores.text = playerScores
+                                if (username == player1) {
+                                    facebookText = when {
+                                        player1Score!! > player2Score!! -> {
+                                            "I won a game over $player2 with $player1Score - $player2Score"
+                                        }
+                                        player1Score < player2Score -> {
+                                            "I lost a game over $player2 with $player1Score - $player2Score"
+                                        }
+                                        else -> {
+                                            "I played a draw vs $player2 with $player1Score - $player2Score"
+                                        }
+                                    }
+                                } else {
+                                    facebookText = when {
+                                        player1Score!! < player2Score!! -> {
+                                            "I won a game over $player1 with $player2Score - $player1Score"
+                                        }
+                                        player1Score > player2Score -> {
+                                            "I lost a game over $player1 with $player2Score - $player1Score"
+                                        }
+                                        else -> {
+                                            "I played a draw vs $player1 with $player2Score - $player1Score"
+                                        }
+                                    }
+                                }
                             } else {
                                 scores.text = "Not Finished"
                             }
+
                         } else {
                             //Played Solo
                             facebookButtonLayout.visibility = View.VISIBLE
-                            val shared = activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
-                            val username = shared?.getString("username", "")
                             if (username != null) {
-                                names.text = username
+                                name1.text = username
                                 val scoreText = document.getLong("player1Score").toString() + " OF 5"
                                 scores.text = scoreText
+                                facebookText = "I just played a game and got $scoreText in QuizGames"
                             }
                         }
                         if (user != null) {

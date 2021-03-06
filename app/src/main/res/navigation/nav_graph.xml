@@ -123,6 +123,9 @@
         <argument
             android:name="activeGameID"
             app:argType="string" />
+        <argument
+            android:name="solo"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"

@@ -144,7 +144,7 @@ class GameAdapter(
 
                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                     gameID,
-                    newActiveID
+                    newActiveID, true
                 )
                 parentFragment.findNavController().navigate(action)
 
@@ -196,11 +196,12 @@ class GameAdapter(
                                     "Found and Joining Game",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                val action =
-                                    GamesFragmentDirections.actionGamesFragmentToGameFragment(
-                                        gameID,
-                                        activeGameID
-                                    )
+
+                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                                    gameID,
+                                    activeGameID, false
+                                )
+
                                 parentFragment.findNavController().navigate(action)
                             }
                             .addOnFailureListener { e ->
@@ -239,11 +240,11 @@ class GameAdapter(
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                val action =
-                                    GamesFragmentDirections.actionGamesFragmentToGameFragment(
-                                        gameID,
-                                        newActiveID
-                                    )
+                                val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
+                                    gameID,
+                                    newActiveID, false
+                                )
+
                                 parentFragment.findNavController().navigate(action)
 
                             }
