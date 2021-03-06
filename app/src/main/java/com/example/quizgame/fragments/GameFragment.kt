@@ -161,7 +161,8 @@ class GameFragment : Fragment(R.layout.fragment_game), View.OnClickListener {
     }
 
     private fun saveToDB(i: Int) {
-        var data = hashMapOf("player1Score" to score)
+        var data: HashMap<String, Any>
+
         if (!solo) {
             db.collection("Games").document(gameID).collection("ActiveGames").document(activeGameID)
                 .get()
@@ -172,8 +173,10 @@ class GameFragment : Fragment(R.layout.fragment_game), View.OnClickListener {
                             val shared =
                                 activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
                             val username = shared?.getString("username", "")
-                            if (document.getString("player1") != username) {
-                                data = hashMapOf("player2Score" to score)
+                            data = if (document.getString("player1") != username) {
+                                hashMapOf("player2Score" to score, "player2Finished" to true)
+                            } else {
+                                hashMapOf("player1Score" to score, "player1Finished" to true)
                             }
                             db.collection("Games").document(gameID).collection("ActiveGames").document(
                                 activeGameID
@@ -192,6 +195,7 @@ class GameFragment : Fragment(R.layout.fragment_game), View.OnClickListener {
                     }
                 }
         } else {
+            data = hashMapOf("player1Score" to score)
             Log.d("André", score.toString())
             db.collection("Games").document(gameID).collection("ActiveGames").document(activeGameID)
                 .set(data, SetOptions.merge()).addOnSuccessListener {
