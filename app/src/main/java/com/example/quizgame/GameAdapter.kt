@@ -68,7 +68,7 @@ class GameAdapter(
                         }
                     }
             } else if (from == 2) {
-                val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment(
+                val action = MyGamesFragmentDirections.actionMyGamesFragmentToQuestionsListFragment(
                     gameID
                 )
                 parentFragment.findNavController().navigate(action)

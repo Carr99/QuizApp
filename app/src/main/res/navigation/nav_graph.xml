@@ -156,6 +156,9 @@
         <action
             android:id="@+id/action_myGamesFragment_to_createGameFragment"
             app:destination="@id/createGameFragment" />
+        <action
+            android:id="@+id/action_myGamesFragment_to_questionsListFragment"
+            app:destination="@id/questionsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createGameFragment"
@@ -165,9 +168,6 @@
         <action
             android:id="@+id/action_createGameFragment_to_questionsListFragment"
             app:destination="@id/questionsListFragment" />
-        <argument
-            android:name="gameId"
-            app:argType="string" />
         <action
             android:id="@+id/action_createGameFragment_to_createQuestionFragment"
             app:destination="@id/createQuestionFragment" />

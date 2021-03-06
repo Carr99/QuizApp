@@ -37,7 +37,7 @@ class MyGamesFragment : Fragment() {
         val createBtn = view.findViewById<Button>(R.id.create_button)
 
         createBtn.setOnClickListener {
-            val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment("0")
+            val action = MyGamesFragmentDirections.actionMyGamesFragmentToCreateGameFragment()
             findNavController().navigate(action)
         }
 

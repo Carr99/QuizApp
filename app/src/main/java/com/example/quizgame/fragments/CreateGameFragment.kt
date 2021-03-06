@@ -13,7 +13,6 @@ import com.google.firebase.ktx.Firebase
 
 
 class CreateGameFragment : Fragment(R.layout.fragment_create_game) {
-    private val args: CreateGameFragmentArgs by navArgs()
     private val db = Firebase.firestore
     lateinit var radioGroup: RadioGroup
     lateinit var genre: String
@@ -39,53 +38,33 @@ class CreateGameFragment : Fragment(R.layout.fragment_create_game) {
 
         }
 
-        val gameId = args.gameId
+        val createBtn = view.findViewById<Button>(R.id.create_button)
+        val username = activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
+            ?.getString("username", "")
 
-        if (gameId != "0") {
-            val updateBtn = view.findViewById<Button>(R.id.update_button)
-            val questionsBtn = view.findViewById<Button>(R.id.questions_button)
 
-            updateBtn.visibility = View.VISIBLE
-            questionsBtn.visibility = View.VISIBLE
-
-            questionsBtn.setOnClickListener {
+        createBtn.setOnClickListener {
+            val newQuiz = hashMapOf(
+                "creator" to username.toString(),
+                "genre" to genre,
+                "name" to gameName.text.toString(),
+                "rating" to 0,
+                "score" to 0,
+                "votes" to 0
+            )
+            val gameID = db.collection("Games").document().id
+            db.collection("Games").document(gameID).set(
+                newQuiz
+            ).addOnSuccessListener {
+                Toast.makeText(context, "Added base", Toast.LENGTH_SHORT).show()
                 val action =
-                    CreateGameFragmentDirections.actionCreateGameFragmentToQuestionsListFragment(
-                        gameId
+                    CreateGameFragmentDirections.actionCreateGameFragmentToCreateQuestionFragment(
+                        gameID
                     )
                 findNavController().navigate(action)
             }
-        } else {
-            val createBtn = view.findViewById<Button>(R.id.create_button)
-            val username = activity?.getSharedPreferences("user_data", Context.MODE_PRIVATE)
-                ?.getString("username", "")
-
-            createBtn.visibility = View.VISIBLE
-
-
-            createBtn.setOnClickListener {
-                val newQuiz = hashMapOf(
-                    "creator" to username.toString(),
-                    "genre" to genre,
-                    "name" to gameName.text.toString(),
-                    "rating" to 0,
-                    "score" to 0,
-                    "votes" to 0
-                )
-                val gameID = db.collection("Games").document().id
-                db.collection("Games").document(gameID).set(
-                    newQuiz
-                ).addOnSuccessListener {
-                    Toast.makeText(context, "Added base", Toast.LENGTH_SHORT).show()
-                    val action =
-                        CreateGameFragmentDirections.actionCreateGameFragmentToCreateQuestionFragment(
-                            gameID
-                        )
-                    findNavController().navigate(action)
-                }
-
-            }
 
         }
+
     }
 }

@@ -10,6 +10,7 @@
 
     <EditText
         android:id="@+id/questionText"
+        android:lines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Question Here"
@@ -18,6 +19,8 @@
 
     <EditText
         android:id="@+id/answerText"
+        android:maxLength="50"
+        android:lines="1"
         android:hint="Enter Answer Here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +30,8 @@
     <EditText
         android:id="@+id/option1Text"
         android:hint="Enter Alternative Here"
+        android:lines="1"
+        android:maxLength="50"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -35,6 +40,8 @@
     <EditText
         android:id="@+id/option2Text"
         android:hint="Enter Alternative Here"
+        android:lines="1"
+        android:maxLength="50"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -43,6 +50,8 @@
     <EditText
         android:id="@+id/option3Text"
         android:layout_width="match_parent"
+        android:maxLength="50"
+        android:lines="1"
         android:layout_height="wrap_content"
         android:hint="Enter Alternative Here"
         android:layout_marginHorizontal="20dp"
