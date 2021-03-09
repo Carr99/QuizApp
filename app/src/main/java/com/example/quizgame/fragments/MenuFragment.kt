@@ -60,7 +60,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         }
 
         historyButton.setOnClickListener {
-            val action = MenuFragmentDirections.actionMenuFragmentToHistoryFragment()
+            val action = MenuFragmentDirections.actionMenuFragmentToHistoryFragment(user.toString())
             findNavController().navigate(action)
         }
 

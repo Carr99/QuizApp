@@ -147,6 +147,7 @@
         <action
             android:id="@+id/action_historyFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <argument android:name="userID" />
     </fragment>
     <fragment
         android:id="@+id/myGamesFragment"

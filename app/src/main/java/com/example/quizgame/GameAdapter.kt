@@ -77,7 +77,7 @@ class GameAdapter(
     }
 
     // save gameID etc for easy lookup in match history or save relevant info directly into history to save a search
-//    private fun saveHistorySolo(db: FirebaseFirestore, username: String?, gameID: String) {
+//    private fun saveHistorySlo(db: FirebaseFirestore, username: String?, gameID: String) {
 //        val genreRef = db.collection("Games").document(gameID).get().addOnSuccessListener { document ->
 //            Log.e("test docu",document.get("genre").toString())
 //        }
@@ -90,7 +90,8 @@ class GameAdapter(
 //                    val matchInfo = hashMapOf(
 //                        "player1" to username,
 //                        "quizName" to quizName,
-//                        "genre" to genre
+//                        "genre" to genre,
+//                        "score" to score
 //                    )
 //                    db.collection("users").document(document.id).collection("history").document()
 //                        .set(
@@ -100,6 +101,31 @@ class GameAdapter(
 //                }
 //            }
 //    }
+
+    private fun saveHistorySolo(db: FirebaseFirestore, username: String?, gameID: String,score:Int) {
+     db.collection("Games").document(gameID).get().addOnSuccessListener { document ->
+         val genre = document.get("genre").toString()
+         val quizName = document.get("name").toString()
+
+         db.collection("users").whereEqualTo("username", username).get()
+             .addOnSuccessListener { documents ->
+                 for (document in documents) {
+                     Log.e("id", document.id)
+                     val matchInfo = hashMapOf(
+                         "player1" to username,
+                         "quizName" to quizName,
+                         "genre" to genre,
+                         "score" to score
+                     )
+                     db.collection("users").document(document.id).collection("history").document()
+                         .set(
+                             matchInfo,
+                             SetOptions.merge()
+                         )
+                 }
+             }
+     }
+    }
 
     private fun saveHistoryMulti() {
 
@@ -140,7 +166,7 @@ class GameAdapter(
                     Toast.LENGTH_SHORT
                 ).show()
 
-//                saveHistorySolo(db, username, gameID)
+                saveHistorySolo(db, username, gameID,1)
 
                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                     gameID,
