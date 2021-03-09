@@ -40,7 +40,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         val user = auth.currentUser
         val userID = user?.uid
         if(userID!=null) {
-            val query: Query = db.collection("users").document(userID).collection("history")
+            val query: Query = db.collection("users").document(userID).collection("history").orderBy("date",Query.Direction.DESCENDING)
             val firestoreRecyclerOptions: FirestoreRecyclerOptions<HistoryModel> =
                 FirestoreRecyclerOptions.Builder<HistoryModel>()
                     .setQuery(query, HistoryModel::class.java)
