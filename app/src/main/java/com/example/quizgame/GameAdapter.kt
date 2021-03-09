@@ -90,7 +90,6 @@ class GameAdapter(
                 val document = task.result
                 val quizName = document?.get("name")
 
-            if (!online) {
 
                 val matchInfo = hashMapOf(
                     "activeGameID" to activeGameID,
@@ -103,14 +102,12 @@ class GameAdapter(
                     db.collection("users").document(user.uid).collection("history")
                         .document()
                         .set(
-                            matchInfo,
-                            SetOptions.merge()
+                            matchInfo
                         )
                 }
 
 
             }
-        }
         }
 
 
@@ -155,7 +152,7 @@ class GameAdapter(
                     gameID,
                     newActiveID, true
                 )
-
+                saveHistory(db, gameID, newActiveID)
                 parentFragment.findNavController().navigate(action)
 
             }
