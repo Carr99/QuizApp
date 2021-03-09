@@ -1,6 +1,7 @@
 package com.example.quizgame.fragments
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -10,6 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.quizgame.R
+import com.facebook.share.model.ShareHashtag
+import com.facebook.share.model.ShareLinkContent
+import com.facebook.share.widget.ShareButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -31,7 +35,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         val scores = view.findViewById<TextView>(R.id.score)
         val rateGameLayout = view.findViewById<LinearLayout>(R.id.rateGameId)
         val ratingBar = view.findViewById<RatingBar>(R.id.ratingBarId)
-        val facebookButtonLayout = view.findViewById<LinearLayout>(R.id.facebookButton)
+        val shareButton = view.findViewById<ShareButton>(R.id.shareButton)
         val gameID = args.gameID
         val activeGameID = args.activeGameID
         var facebookText = ""
@@ -54,9 +58,6 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
             ratingBar.setIsIndicator(true)
         }
 
-        facebookButtonLayout.setOnClickListener {
-
-        }
 
         db.collection("Games").document(gameID).collection("ActiveGames").document(activeGameID)
             .get()
@@ -81,7 +82,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                                     "player2Finished"
                                 ) == true
                             ) {
-                                facebookButtonLayout.visibility = View.VISIBLE
+                                shareButton.visibility = View.VISIBLE
                                 scores.text = playerScores
                                 if (username == player1) {
                                     facebookText = when {
@@ -114,7 +115,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
                         } else {
                             //Played Solo
-                            facebookButtonLayout.visibility = View.VISIBLE
+                            shareButton.visibility = View.VISIBLE
                             if (username != null) {
                                 name1.text = username
                                 val scoreText = document.getLong("player1Score").toString() + " OF 5"
@@ -122,6 +123,12 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
                                 facebookText = "I just played a game and got $scoreText in QuizGames"
                             }
                         }
+                        val content = ShareLinkContent.Builder()
+                            .setContentUrl(Uri.parse("https://www.google.com"))
+                            .setQuote(facebookText)
+                            .setShareHashtag(ShareHashtag.Builder().setHashtag("#QuizGames").build())
+                            .build()
+                        shareButton.shareContent = content
                         if (user != null) {
                             db.collection("users").document(user)
                                 .get()
