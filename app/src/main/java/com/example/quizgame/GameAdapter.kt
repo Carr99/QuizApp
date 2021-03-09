@@ -16,9 +16,11 @@ import com.example.quizgame.fragments.GamesFragmentDirections
 import com.example.quizgame.fragments.MyGamesFragmentDirections
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 
 
 class GameAdapter(
@@ -76,43 +78,44 @@ class GameAdapter(
         }
     }
 
-    private fun saveHistorySolo(
+    private fun saveHistory(
         db: FirebaseFirestore,
-        username: String?,
         gameID: String,
-        score: Int
+        activeGameID: String
     ) {
-        db.collection("Games").document(gameID).get().addOnSuccessListener { document ->
-            val genre = document.get("genre").toString()
-            val quizName = document.get("name").toString()
+        val auth = Firebase.auth
+        val user = auth.currentUser
+        db.collection("Games").document(gameID).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                val quizName = document?.get("name")
+
             if (!online) {
-                db.collection("users").whereEqualTo("username", username).get()
-                    .addOnSuccessListener { documents ->
-                        for (document in documents) {
-                            Log.e("id", document.id)
-                            val matchInfo = hashMapOf(
-                                "player1" to username,
-                                "quizName" to quizName,
-                                "genre" to genre,
-                                "player1Score" to score
-                            )
-                            db.collection("users").document(document.id).collection("history")
-                                .document()
-                                .set(
-                                    matchInfo,
-                                    SetOptions.merge()
-                                )
-                        }
-                    }
-            }else{
+
+                val matchInfo = hashMapOf(
+                    "activeGameID" to activeGameID,
+                    "gameID" to gameID,
+                    "quizName" to quizName,
+                    "date" to FieldValue.serverTimestamp()
+                )
+
+                if (user != null) {
+                    db.collection("users").document(user.uid).collection("history")
+                        .document()
+                        .set(
+                            matchInfo,
+                            SetOptions.merge()
+                        )
+                }
+
 
             }
         }
+        }
+
+
     }
 
-    private fun saveHistoryMulti() {
-
-    }
 
     private fun matchmakingSolo(gameID: String, db: FirebaseFirestore, arrayList: Array<Int>) {
         //TODO: Set up matchmaking solo, pass gameid and active game id
@@ -133,8 +136,7 @@ class GameAdapter(
                 arrayList[2],
                 arrayList[3],
                 arrayList[4]
-            ),
-            "date" to FieldValue.serverTimestamp(),
+            )
         )
         val newActiveID =
             db.collection("Games").document(gameID).collection("ActiveGames").document().id
@@ -149,12 +151,12 @@ class GameAdapter(
                     Toast.LENGTH_SHORT
                 ).show()
 
-                saveHistorySolo(db, username, gameID, 1)
 
                 val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(
                     gameID,
                     newActiveID, true
                 )
+
                 parentFragment.findNavController().navigate(action)
 
             }
@@ -211,7 +213,7 @@ class GameAdapter(
                                         gameID,
                                         activeGameID, false
                                     )
-
+                                saveHistory(db, gameID, activeGameID)
                                 parentFragment.findNavController().navigate(action)
                             }
                             .addOnFailureListener { e ->
@@ -232,7 +234,6 @@ class GameAdapter(
                                 arrayList[4]
                             ),
                             "status" to "waiting",
-                            "date" to FieldValue.serverTimestamp(),
                             "player1Finished" to false,
                             "player2Finished" to false
                         )
@@ -255,7 +256,7 @@ class GameAdapter(
                                         gameID,
                                         newActiveID, false
                                     )
-
+                                saveHistory(db, gameID, newActiveID)
                                 parentFragment.findNavController().navigate(action)
 
                             }

@@ -40,14 +40,14 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             FirestoreRecyclerOptions.Builder<HistoryModel>()
                 .setQuery(query, HistoryModel::class.java)
                 .build()
-        historyAdapter = HistoryAdapter(firestoreRecyclerOptions)
+        historyAdapter = HistoryAdapter(firestoreRecyclerOptions,this)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
         historyAdapter!!.startListening()
         if(recyclerView!=null){
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.adapter = historyAdapter
         }
-        
+
     }
     override fun onDestroy() {
         super.onDestroy()

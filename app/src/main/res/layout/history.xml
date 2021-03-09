@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
     android:background="@drawable/rounded"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -21,23 +21,14 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/player1"
+        android:id="@+id/dateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="player1..."
+        android:text="Date..."
         android:textSize="15sp"
         android:layout_marginBottom="10dp"/>
 
-    <TextView
-        android:id="@+id/player2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Player2..."
-        android:textSize="15sp"
-        android:visibility="gone"/>
+
 </LinearLayout>
