@@ -47,6 +47,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.adapter = historyAdapter
         }
+        
     }
     override fun onDestroy() {
         super.onDestroy()
