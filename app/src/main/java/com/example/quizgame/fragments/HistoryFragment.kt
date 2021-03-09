@@ -13,6 +13,7 @@ import com.example.quizgame.HistoryModel
 import com.example.quizgame.QuizModel
 import com.example.quizgame.R
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,17 +36,23 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     }
 
     private fun list(){
-        val query: Query = db.collection("users").document("T7IguK3iaKbDhqbbkBShwSWbrjI3").collection("history")
-        val firestoreRecyclerOptions: FirestoreRecyclerOptions<HistoryModel> =
-            FirestoreRecyclerOptions.Builder<HistoryModel>()
-                .setQuery(query, HistoryModel::class.java)
-                .build()
-        historyAdapter = HistoryAdapter(firestoreRecyclerOptions,this)
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
-        historyAdapter!!.startListening()
-        if(recyclerView!=null){
-            recyclerView.layoutManager = LinearLayoutManager(activity)
-            recyclerView.adapter = historyAdapter
+        val auth = Firebase.auth
+        val user = auth.currentUser
+        val userID = user?.uid
+        if(userID!=null) {
+            val query: Query = db.collection("users").document(userID).collection("history")
+            val firestoreRecyclerOptions: FirestoreRecyclerOptions<HistoryModel> =
+                FirestoreRecyclerOptions.Builder<HistoryModel>()
+                    .setQuery(query, HistoryModel::class.java)
+                    .build()
+
+            historyAdapter = HistoryAdapter(firestoreRecyclerOptions, this)
+            val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
+            historyAdapter!!.startListening()
+            if (recyclerView != null) {
+                recyclerView.layoutManager = LinearLayoutManager(activity)
+                recyclerView.adapter = historyAdapter
+            }
         }
 
     }

@@ -118,7 +118,6 @@ class GameAdapter(
 
 
     private fun matchmakingSolo(gameID: String, db: FirebaseFirestore, arrayList: Array<Int>) {
-        //TODO: Set up matchmaking solo, pass gameid and active game id
 
         val shared =
             parentFragment.activity?.getSharedPreferences(
