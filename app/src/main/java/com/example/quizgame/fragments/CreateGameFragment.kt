@@ -54,7 +54,7 @@ class CreateGameFragment : Fragment(R.layout.fragment_create_game) {
                 "name" to gameName.text.toString(),
                 "rating" to 0,
                 "score" to 0,
-                "votes" to 0
+                "vote" to 0
             )
             val gameID = db.collection("Games").document().id
             db.collection("Games").document(gameID).set(
