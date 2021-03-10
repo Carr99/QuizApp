@@ -1,7 +1,6 @@
 package com.example.quizgame
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -156,7 +155,7 @@ class GameAdapter(
                 parentFragment.findNavController().navigate(action)
 
             }
-            .addOnFailureListener { e ->
+            .addOnFailureListener {
                 Toast.makeText(parentFragment.activity, "Error", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -212,7 +211,7 @@ class GameAdapter(
                                 saveHistory(db, gameID, activeGameID)
                                 parentFragment.findNavController().navigate(action)
                             }
-                            .addOnFailureListener { e ->
+                            .addOnFailureListener {
                                 Toast.makeText(parentFragment.activity, "Error", Toast.LENGTH_SHORT)
                                     .show()
                             }
@@ -256,7 +255,7 @@ class GameAdapter(
                                 parentFragment.findNavController().navigate(action)
 
                             }
-                            .addOnFailureListener { e ->
+                            .addOnFailureListener {
                                 Toast.makeText(parentFragment.activity, "Error", Toast.LENGTH_SHORT)
                                     .show()
                             }

@@ -1,6 +1,5 @@
 package com.example.quizgame
 
-import com.google.firebase.Timestamp
 import java.util.*
 
 class HistoryModel {

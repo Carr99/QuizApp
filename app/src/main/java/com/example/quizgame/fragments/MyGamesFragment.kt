@@ -23,7 +23,6 @@ class MyGamesFragment : Fragment() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     var gameAdapter: GameAdapter? = null
-    private var username = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,

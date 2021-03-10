@@ -57,7 +57,7 @@ class GamesFragment : Fragment() {
     private fun setUpRecyclerView(query: Query, i: Int) {
         val firestoreRecyclerOptions: FirestoreRecyclerOptions<GameModel> =
             FirestoreRecyclerOptions.Builder<GameModel>()
-                .setQuery(query.whereEqualTo("ready", true).limit(10), GameModel::class.java)
+                .setQuery(query.whereEqualTo("ready", true).orderBy("rating", Query.Direction.DESCENDING).limit(10), GameModel::class.java)
                 .build()
         if (i == 1) {
             gameAdapter = GameAdapter(firestoreRecyclerOptions, 1, online, this)

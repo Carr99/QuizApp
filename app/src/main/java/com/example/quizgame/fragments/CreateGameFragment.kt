@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.quizgame.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -25,15 +24,20 @@ class CreateGameFragment : Fragment(R.layout.fragment_create_game) {
         val rad1 = view.findViewById<RadioButton>(R.id.radio1)
         rad1.isChecked = true
         genre = "Sport"
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.radio1) {
-                genre = "Sport"
-            } else if (checkedId == R.id.radio2) {
-                genre = "Culture"
-            } else if (checkedId == R.id.radio3) {
-                genre = "History"
-            } else if (checkedId == R.id.radio4) {
-                genre = "Other"
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radio1 -> {
+                    genre = "Sport"
+                }
+                R.id.radio2 -> {
+                    genre = "Culture"
+                }
+                R.id.radio3 -> {
+                    genre = "History"
+                }
+                R.id.radio4 -> {
+                    genre = "Other"
+                }
             }
 
         }

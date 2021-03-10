@@ -2,7 +2,6 @@ package com.example.quizgame.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -84,40 +83,40 @@ class GameFragment : Fragment(R.layout.fragment_game), View.OnClickListener {
                     if (document!!.exists()) {
                         questionList = (document["questions"] as ArrayList<Long>)
                         db.collection("Games").document(gameID).collection("Quiz").document(questionList[0].toString()).
-                        get().addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val document = task.result
-                                if (document!!.exists())
-                                    document.toObject(QuizModel::class.java)?.let {
+                        get().addOnCompleteListener { task2 ->
+                            if (task2.isSuccessful) {
+                                val document2 = task2.result
+                                if (document2!!.exists())
+                                    document2.toObject(QuizModel::class.java)?.let { it ->
                                         quiz.add(it)
                                         db.collection("Games").document(gameID).collection("Quiz").document(questionList[1].toString()).
-                                        get().addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-                                                val document = task.result
-                                                if (document!!.exists())
-                                                    document.toObject(QuizModel::class.java)?.let {
-                                                        quiz.add(it)
+                                        get().addOnCompleteListener { task3 ->
+                                            if (task3.isSuccessful) {
+                                                val document3 = task3.result
+                                                if (document3!!.exists())
+                                                    document3.toObject(QuizModel::class.java)?.let { it2 ->
+                                                        quiz.add(it2)
                                                         db.collection("Games").document(gameID).collection("Quiz").document(questionList[2].toString()).
-                                                        get().addOnCompleteListener { task ->
-                                                            if (task.isSuccessful) {
-                                                                val document = task.result
-                                                                if (document!!.exists())
-                                                                    document.toObject(QuizModel::class.java)?.let {
-                                                                        quiz.add(it)
+                                                        get().addOnCompleteListener { task4 ->
+                                                            if (task4.isSuccessful) {
+                                                                val document4 = task4.result
+                                                                if (document4!!.exists())
+                                                                    document4.toObject(QuizModel::class.java)?.let { it3 ->
+                                                                        quiz.add(it3)
                                                                         db.collection("Games").document(gameID).collection("Quiz").document(questionList[3].toString()).
-                                                                        get().addOnCompleteListener { task ->
+                                                                        get().addOnCompleteListener { task5 ->
                                                                             if (task.isSuccessful) {
-                                                                                val document = task.result
-                                                                                if (document!!.exists())
-                                                                                    document.toObject(QuizModel::class.java)?.let {
-                                                                                        quiz.add(it)
+                                                                                val document5 = task5.result
+                                                                                if (document5!!.exists())
+                                                                                    document5.toObject(QuizModel::class.java)?.let { it4 ->
+                                                                                        quiz.add(it4)
                                                                                         db.collection("Games").document(gameID).collection("Quiz").document(questionList[4].toString()).
-                                                                                        get().addOnCompleteListener { task ->
+                                                                                        get().addOnCompleteListener { task6 ->
                                                                                             if (task.isSuccessful) {
-                                                                                                val document = task.result
-                                                                                                if (document!!.exists())
-                                                                                                    document.toObject(QuizModel::class.java)?.let {
-                                                                                                        quiz.add(it)
+                                                                                                val document6 = task6.result
+                                                                                                if (document6!!.exists())
+                                                                                                    document6.toObject(QuizModel::class.java)?.let { it5 ->
+                                                                                                        quiz.add(it5)
                                                                                                         showQuestions(0)
                                                                                                     }
                                                                                             }
@@ -196,7 +195,6 @@ class GameFragment : Fragment(R.layout.fragment_game), View.OnClickListener {
                 }
         } else {
             data = hashMapOf("player1Score" to score)
-            Log.d("André", score.toString())
             db.collection("Games").document(gameID).collection("ActiveGames").document(activeGameID)
                 .set(data, SetOptions.merge()).addOnSuccessListener {
                     if (i == 1) {
