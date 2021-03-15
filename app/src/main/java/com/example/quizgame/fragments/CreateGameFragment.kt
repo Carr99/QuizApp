@@ -44,6 +44,7 @@ class CreateGameFragment : Fragment(R.layout.fragment_create_game) {
 
 
         createBtn.setOnClickListener {
+            if (!gameName.text.isNullOrBlank() && !gameName.text.isNullOrEmpty()){
             val newQuiz = hashMapOf(
                 "creator" to username.toString(),
                 "genre" to genre,
@@ -63,6 +64,7 @@ class CreateGameFragment : Fragment(R.layout.fragment_create_game) {
                     )
                 findNavController().navigate(action)
             }
+        }
 
         }
 
